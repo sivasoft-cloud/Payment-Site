@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Payment Gateway</title>
+    <style>
+        /* Modern Animated Background */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(45deg, #0f2027, #203a43, #2c5364);
+            background-size: 300% 300%;
+            animation: gradientBG 12s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 3D Glassmorphism Container */
+        .payment-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform 0.3s ease;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-5px) rotateX(1deg) rotateY(1deg);
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Modern Inputs */
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            border-bottom-color: #36d1dc;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+            transition: 0.3s ease all;
+        }
+
+        .input-group input:focus ~ label,
+        .input-group input:valid ~ label {
+            top: -15px;
+            font-size: 12px;
+            color: #36d1dc;
+        }
+
+        /* Main 3D Buttons */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .btn-bank {
+            background: linear-gradient(135deg, #36d1dc, #5b86e5);
+            box-shadow: 0 6px 0 #2c6cbd, 0 15px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn-upi-main {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            box-shadow: 0 6px 0 #0d7a71, 0 15px 20px rgba(0,0,0,0.3);
+        }
+
+        button:active {
+            transform: translateY(6px);
+            box-shadow: 0 0 0 transparent, 0 5px 10px rgba(0,0,0,0.4);
+        }
+
+        /* Expandable Sections */
+        .hidden-section {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        /* Specific App Buttons inside UPI section */
+        .app-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .app-btn {
+            padding: 10px;
+            font-size: 13px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .btn-gpay { background: #fff; color: #3c4043; box-shadow: 0 4px 0 #ccc; }
+        .btn-phonepe { background: #5f259f; color: #fff; box-shadow: 0 4px 0 #3d156b; }
+        .btn-paytm { background: #002970; color: #00baf2; box-shadow: 0 4px 0 #00163d; }
+        .btn-other { background: #444; color: #fff; box-shadow: 0 4px 0 #222; }
+
+        .app-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 transparent;
+        }
+
+        #bank-details {
+            border-left: 4px solid #36d1dc;
+        }
+        
+        #upi-apps {
+            border-left: 4px solid #38ef7d;
+        }
+
+        p { margin: 8px 0; font-size: 14px; letter-spacing: 0.5px; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="payment-card">
+        <h2>Secure Checkout</h2>
+        
+        <div class="input-group">
+            <input type="text" id="userName" required>
+            <label>Name</label>
+        </div>
+        
+        <div class="input-group">
+            <input type="text" id="companyName" required>
+            <label>Company Name</label>
+        </div>
+
+        <div class="input-group">
+            <input type="number" id="amount" required>
+            <label>Amount (INR)</label>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-bank" id="btnBankToggle">Bank Transfer</button>
+            <button class="btn-upi-main" id="btnUpiToggle">Pay via UPI App</button>
+        </div>
+
+        <!-- Bank Details Section -->
+        <div id="bank-details" class="hidden-section">
+            <h3 style="margin-top: 0; color: #36d1dc;">Bank Details</h3>
+            <p><strong>Bank:</strong> Example Finance Bank</p>
+            <p><strong>Account Name:</strong> Your Company Pvt Ltd</p>
+            <p><strong>Account No:</strong> 987654321012</p>
+            <p><strong>IFSC Code:</strong> EXBK0001234</p>
+        </div>
+
+        <!-- Specific UPI Apps Section -->
+        <div id="upi-apps" class="hidden-section">
+            <h3 style="margin-top: 0; color: #38ef7d; font-size: 16px; text-align: center;">Select Your App</h3>
+            <div class="app-grid">
+                <!-- App Specific Triggers -->
+                <button class="app-btn btn-gpay" onclick="triggerUPI('gpay')">Google Pay</button>
+                <button class="app-btn btn-phonepe" onclick="triggerUPI('phonepe')">PhonePe</button>
+                <button class="app-btn btn-paytm" onclick="triggerUPI('paytm')">Paytm</button>
+                <button class="app-btn btn-other" onclick="triggerUPI('generic')">Other Apps</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const btnBankToggle = document.getElementById('btnBankToggle');
+        const btnUpiToggle = document.getElementById('btnUpiToggle');
+        const bankDetails = document.getElementById('bank-details');
+        const upiApps = document.getElementById('upi-apps');
+        
+        // Toggle Menus
+        btnBankToggle.addEventListener('click', () => {
+            upiApps.style.display = 'none';
+            bankDetails.style.display = bankDetails.style.display === 'block' ? 'none' : 'block';
+        });
+
+        btnUpiToggle.addEventListener('click', () => {
+            bankDetails.style.display = 'none';
+            upiApps.style.display = upiApps.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Specific Payment Triggers
+        function triggerUPI(appType) {
+            const name = document.getElementById('userName').value.trim() || 'Customer';
+            const amount = document.getElementById('amount').value.trim();
+            
+            // Your UPI ID goes here
+            const upiId = "YOUR_UPI_ID@okaxis"; 
+
+            if (!amount || amount <= 0) {
+                alert("Please enter a valid amount.");
+                return;
+            }
+
+            const params = `pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
+            let deepLink = "";
+
+            // Use Custom Deep Links to force specific apps instead of generic "upi://"
+            switch(appType) {
+                case 'gpay':
+                    deepLink = `tez://upi/pay?${params}`; 
+                    break;
+                case 'phonepe':
+                    deepLink = `phonepe://pay?${params}`; 
+                    break;
+                case 'paytm':
+                    deepLink = `paytmmp://pay?${params}`; 
+                    break;
+                case 'generic':
+                default:
+                    deepLink = `upi://pay?${params}`; 
+                    break;
+            }
+
+            // Execute redirect
+            window.location.href = deepLink;
+        }
+    </script>
+</body>
+</html>
