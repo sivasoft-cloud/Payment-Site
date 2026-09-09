@@ -3,191 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Payment Gateway</title>
+    <title>EDIT.OR.SIVA Payment</title>
+    <!-- Modern Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* Modern Animated Background */
+        :root {
+            --primary-cyan: #00f2fe;
+            --primary-blue: #4facfe;
+            --primary-green: #11998e;
+            --primary-light-green: #38ef7d;
+            --bg-dark: #0a0f16;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --input-bg: rgba(255, 255, 255, 0.04);
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.5);
+        }
+
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(45deg, #0f2027, #203a43, #2c5364);
-            background-size: 300% 300%;
-            animation: gradientBG 12s ease infinite;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            color: #fff;
+            color: var(--text-main);
+            overflow: hidden;
+            position: relative;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Animated Background Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out alternate;
+            z-index: -1;
+        }
+        .orb-1 { width: 300px; height: 300px; background: var(--primary-blue); top: 10%; left: 20%; animation-delay: 0s; }
+        .orb-2 { width: 400px; height: 400px; background: var(--primary-green); bottom: 10%; right: 15%; animation-delay: -3s; }
+        .orb-3 { width: 250px; height: 250px; background: #7b2cbf; top: 40%; left: 60%; animation-delay: -6s; }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); }
+            100% { transform: translateY(-30px) translateX(30px); }
         }
 
         /* 3D Glassmorphism Container */
         .payment-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(24px) saturate(150%);
+            -webkit-backdrop-filter: blur(24px) saturate(150%);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
             padding: 40px;
             width: 100%;
-            max-width: 400px;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
-            transform-style: preserve-3d;
-            perspective: 1000px;
-            transition: transform 0.3s ease;
+            max-width: 420px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            z-index: 10;
+            box-sizing: border-box;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 95vh;
+            overflow-y: auto;
         }
 
-        .payment-card:hover {
-            transform: translateY(-5px) rotateX(1deg) rotateY(1deg);
+        /* Custom Scrollbar for small screens */
+        .payment-card::-webkit-scrollbar { width: 6px; }
+        .payment-card::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+
+        .payment-card:hover { transform: translateY(-4px); }
+
+        /* Logo Styling */
+        .brand-logo { display: flex; justify-content: center; margin-bottom: 20px; }
+        .logo-icon {
+            width: 64px; height: 64px;
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.1), rgba(79, 172, 254, 0.1));
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            border-radius: 20px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px -5px rgba(0, 242, 254, 0.2);
+            color: var(--primary-cyan);
         }
 
         h2 {
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 30px;
-            font-weight: 400;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-align: center; margin: 0 0 32px 0; font-weight: 600; font-size: 24px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* Modern Inputs */
-        .input-group {
-            position: relative;
-            margin-bottom: 25px;
-        }
-
+        /* Modern Floating Inputs */
+        .input-group { position: relative; margin-bottom: 20px; }
         .input-group input {
-            width: 100%;
-            padding: 10px 0;
-            font-size: 16px;
-            color: #fff;
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-            outline: none;
-            transition: border-color 0.3s;
+            width: 100%; padding: 22px 16px 10px 16px; font-size: 15px;
+            color: var(--text-main); background: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 14px;
+            outline: none; box-sizing: border-box; transition: all 0.3s ease; font-family: inherit;
         }
-
         .input-group input:focus {
-            border-bottom-color: #36d1dc;
+            background: rgba(255, 255, 255, 0.08); border-color: var(--primary-cyan);
+            box-shadow: 0 0 0 4px rgba(0, 242, 254, 0.1);
         }
-
         .input-group label {
-            position: absolute;
-            top: 10px;
-            left: 0;
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.5);
-            pointer-events: none;
-            transition: 0.3s ease all;
+            position: absolute; top: 50%; left: 16px; transform: translateY(-50%);
+            font-size: 15px; color: var(--text-muted); pointer-events: none;
+            transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1) all;
         }
-
-        .input-group input:focus ~ label,
-        .input-group input:valid ~ label {
-            top: -15px;
-            font-size: 12px;
-            color: #36d1dc;
+        .input-group input:focus ~ label, .input-group input:valid ~ label {
+            top: 14px; font-size: 11px; color: var(--primary-cyan); font-weight: 500;
         }
+        input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 
-        /* Main 3D Buttons */
-        .btn-group {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
+        /* Main Buttons */
+        .btn-group { display: flex; gap: 12px; margin-top: 24px; }
         button {
-            flex: 1;
-            padding: 12px;
-            font-size: 15px;
-            font-weight: bold;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-            transform-style: preserve-3d;
+            flex: 1; padding: 14px; font-size: 14px; font-weight: 600; font-family: inherit;
+            color: #fff; border: none; border-radius: 12px; cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
+        .btn-bank { background: linear-gradient(135deg, var(--primary-blue), #2575fc); }
+        .btn-bank:hover { box-shadow: 0 10px 20px -5px rgba(79, 172, 254, 0.5); transform: translateY(-2px); }
+        .btn-upi-main { background: linear-gradient(135deg, var(--primary-green), var(--primary-light-green)); color: #000; }
+        .btn-upi-main:hover { box-shadow: 0 10px 20px -5px rgba(56, 239, 125, 0.5); transform: translateY(-2px); }
+        button:active { transform: translateY(1px); box-shadow: none; }
 
-        .btn-bank {
-            background: linear-gradient(135deg, #36d1dc, #5b86e5);
-            box-shadow: 0 6px 0 #2c6cbd, 0 15px 20px rgba(0,0,0,0.3);
-        }
+        /* Smooth Expandable Sections */
+        .section-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s ease; }
+        .section-wrapper.active { grid-template-rows: 1fr; }
+        .hidden-section { overflow: hidden; opacity: 0; transition: opacity 0.4s ease; }
+        .section-wrapper.active .hidden-section { opacity: 1; padding-top: 24px; }
 
-        .btn-upi-main {
-            background: linear-gradient(135deg, #11998e, #38ef7d);
-            box-shadow: 0 6px 0 #0d7a71, 0 15px 20px rgba(0,0,0,0.3);
-        }
-
-        button:active {
-            transform: translateY(6px);
-            box-shadow: 0 0 0 transparent, 0 5px 10px rgba(0,0,0,0.4);
-        }
-
-        /* Expandable Sections */
-        .hidden-section {
-            display: none;
-            margin-top: 25px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 10px;
-            animation: fadeIn 0.4s ease forwards;
-        }
-
-        /* Specific App Buttons inside UPI section */
-        .app-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .app-btn {
-            padding: 10px;
-            font-size: 13px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .btn-gpay { background: #fff; color: #3c4043; box-shadow: 0 4px 0 #ccc; }
-        .btn-phonepe { background: #5f259f; color: #fff; box-shadow: 0 4px 0 #3d156b; }
-        .btn-paytm { background: #002970; color: #00baf2; box-shadow: 0 4px 0 #00163d; }
-        .btn-other { background: #444; color: #fff; box-shadow: 0 4px 0 #222; }
-
-        .app-btn:active {
-            transform: translateY(4px);
-            box-shadow: 0 0 0 transparent;
-        }
-
-        #bank-details {
-            border-left: 4px solid #36d1dc;
-        }
+        .details-box { background: rgba(0, 0, 0, 0.2); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; }
+        .details-box h3 { margin: 0 0 16px 0; font-size: 15px; font-weight: 500; }
         
-        #upi-apps {
-            border-left: 4px solid #38ef7d;
-        }
+        #bank-details .details-box { border-left: 4px solid var(--primary-blue); }
+        #bank-details h3 { color: var(--primary-blue); }
+        #upi-apps .details-box { border-left: 4px solid var(--primary-light-green); }
+        #upi-apps h3 { color: var(--primary-light-green); text-align: center; }
 
-        p { margin: 8px 0; font-size: 14px; letter-spacing: 0.5px; }
+        p { margin: 10px 0; font-size: 14px; color: rgba(255, 255, 255, 0.85); display: flex; justify-content: space-between; }
+        p strong { color: #fff; font-weight: 500; text-align: right; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .app-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+        .app-btn { padding: 12px; font-size: 13px; font-weight: 500; border-radius: 10px; text-align: center; }
+        .btn-gpay { background: #fff; color: #3c4043; border: 1px solid rgba(255,255,255,0.8); }
+        .btn-phonepe { background: #5f259f; color: #fff; }
+        .btn-paytm { background: #002970; color: #00baf2; }
+        .btn-other { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+        .app-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+        /* Bank Confirm Button */
+        .btn-confirm-bank {
+            width: 100%; margin-top: 15px; background: rgba(255,255,255,0.1);
+            border: 1px solid var(--primary-blue); color: var(--primary-cyan);
         }
+        .btn-confirm-bank:hover { background: rgba(0, 242, 254, 0.1); }
+
+        /* Footer Information */
+        .card-footer {
+            margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+        }
+        .secure-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+        .secure-badge svg { color: var(--primary-light-green); }
+        .footer-text { font-size: 11px; color: rgba(255, 255, 255, 0.3); text-align: center; }
+
+        /* Loading overlay for sending data */
+        #loader { display: none; font-size: 12px; color: var(--primary-cyan); text-align: center; margin-top: 10px; }
     </style>
 </head>
 <body>
 
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
     <div class="payment-card">
+        
+        <div class="brand-logo">
+            <div class="logo-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+            </div>
+        </div>
+
         <h2>Secure Checkout</h2>
         
         <div class="input-group">
             <input type="text" id="userName" required>
-            <label>Name</label>
+            <label>Full Name</label>
         </div>
         
         <div class="input-group">
@@ -196,33 +207,76 @@
         </div>
 
         <div class="input-group">
+            <input type="text" id="description" required>
+            <label>Payment Description (e.g. Invoice #123)</label>
+        </div>
+
+        <div class="input-group">
             <input type="number" id="amount" required>
-            <label>Amount (INR)</label>
+            <label>Amount (₹)</label>
         </div>
 
         <div class="btn-group">
-            <button class="btn-bank" id="btnBankToggle">Bank Transfer</button>
-            <button class="btn-upi-main" id="btnUpiToggle">Pay via UPI App</button>
+            <button class="btn-bank" id="btnBankToggle">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                Bank Transfer
+            </button>
+            <button class="btn-upi-main" id="btnUpiToggle">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                Pay via UPI
+            </button>
         </div>
 
         <!-- Bank Details Section -->
-        <div id="bank-details" class="hidden-section">
-            <h3 style="margin-top: 0; color: #36d1dc;">Bank Details</h3>
-            <p><strong>Bank:</strong> Example Finance Bank</p>
-            <p><strong>Account Name:</strong> Your Company Pvt Ltd</p>
-            <p><strong>Account No:</strong> 987654321012</p>
-            <p><strong>IFSC Code:</strong> EXBK0001234</p>
+        <div id="bank-wrapper" class="section-wrapper">
+            <div id="bank-details" class="hidden-section">
+                <div class="details-box">
+                    <h3>Bank Details</h3>
+                    <p><span>Bank</span> <strong>Example Finance Bank</strong></p>
+                    <p><span>Account Name</span> <strong>edit.or.siva</strong></p>
+                    <p><span>Account No</span> <strong>987654321012</strong></p>
+                    <p><span>IFSC Code</span> <strong>EXBK0001234</strong></p>
+                    <button class="btn-confirm-bank" onclick="handleBankConfirmation()">I have completed the transfer</button>
+                    <div id="bankLoader" style="display: none; text-align: center; margin-top: 10px; font-size: 12px; color: var(--primary-cyan);">Recording payment...</div>
+                </div>
+            </div>
         </div>
 
         <!-- Specific UPI Apps Section -->
-        <div id="upi-apps" class="hidden-section">
-            <h3 style="margin-top: 0; color: #38ef7d; font-size: 16px; text-align: center;">Select Your App</h3>
-            <div class="app-grid">
-                <!-- App Specific Triggers -->
-                <button class="app-btn btn-gpay" onclick="triggerUPI('gpay')">Google Pay</button>
-                <button class="app-btn btn-phonepe" onclick="triggerUPI('phonepe')">PhonePe</button>
-                <button class="app-btn btn-paytm" onclick="triggerUPI('paytm')">Paytm</button>
-                <button class="app-btn btn-other" onclick="triggerUPI('generic')">Other Apps</button>
+        <div id="upi-wrapper" class="section-wrapper">
+            <div id="upi-apps" class="hidden-section">
+                <div class="details-box">
+                    <h3>Select Your UPI App</h3>
+                    <div class="app-grid">
+                        <button class="app-btn btn-gpay" onclick="triggerUPI('gpay')">Google Pay</button>
+                        <button class="app-btn btn-phonepe" onclick="triggerUPI('phonepe')">PhonePe</button>
+                        <button class="app-btn btn-paytm" onclick="triggerUPI('paytm')">Paytm</button>
+                        <button class="app-btn btn-other" onclick="triggerUPI('generic')">Other Apps</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="secure-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span>Payments are secured by 256-bit encryption</span>
+            </div>
+            <div class="footer-text">By continuing, you agree to our Terms of Service & Privacy Policy.</div>
+            
+            <!-- Contact Info Block -->
+            <div style="margin-top: 15px; text-align: center; font-size: 13px;">
+                <div style="color: var(--text-main); font-weight: 600; margin-bottom: 8px;">edit.or.siva</div>
+                <div style="display: flex; justify-content: center; gap: 15px;">
+                    <a href="https://instagram.com/edit.or.siva" target="_blank" style="color: var(--primary-cyan); text-decoration: none; display: flex; align-items: center; gap: 4px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        Instagram
+                    </a>
+                    <a href="https://wa.me/918760383412" target="_blank" style="color: var(--primary-light-green); text-decoration: none; display: flex; align-items: center; gap: 4px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        WhatsApp
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -230,54 +284,97 @@
     <script>
         const btnBankToggle = document.getElementById('btnBankToggle');
         const btnUpiToggle = document.getElementById('btnUpiToggle');
-        const bankDetails = document.getElementById('bank-details');
-        const upiApps = document.getElementById('upi-apps');
+        const bankWrapper = document.getElementById('bank-wrapper');
+        const upiWrapper = document.getElementById('upi-wrapper');
         
-        // Toggle Menus
+        // --- PASTE YOUR GOOGLE SCRIPT URL HERE ---
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3RnpcWeUADFCmgaZe-ZKEZLGgkuem_2vGEQX_4tRCRZXHQGIkgV5AKNTyZzhwbPMd/exec";
+
         btnBankToggle.addEventListener('click', () => {
-            upiApps.style.display = 'none';
-            bankDetails.style.display = bankDetails.style.display === 'block' ? 'none' : 'block';
+            upiWrapper.classList.remove('active');
+            bankWrapper.classList.toggle('active');
         });
 
         btnUpiToggle.addEventListener('click', () => {
-            bankDetails.style.display = 'none';
-            upiApps.style.display = upiApps.style.display === 'block' ? 'none' : 'block';
+            bankWrapper.classList.remove('active');
+            upiWrapper.classList.toggle('active');
         });
+
+        // Background function to send data to Google Drive/Sheets
+        function saveToGoogleSheet(paymentMethod) {
+            const name = document.getElementById('userName').value.trim();
+            const company = document.getElementById('companyName').value.trim();
+            const desc = document.getElementById('description').value.trim();
+            const amount = document.getElementById('amount').value.trim();
+
+            if (!name || !amount) return;
+
+            const data = {
+                name: name,
+                company: company || 'N/A',
+                description: desc || 'N/A',
+                amount: amount,
+                method: paymentMethod
+            };
+
+            // Using text/plain avoids CORS preflight issues with Google Apps Script
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(data)
+            }).catch(err => console.log('Log saved silently'));
+        }
+
+        // Handles Bank Transfer log
+        function handleBankConfirmation() {
+            if (!validateInputs()) return;
+            
+            document.getElementById('bankLoader').style.display = 'block';
+            saveToGoogleSheet('Manual Bank Transfer');
+            
+            setTimeout(() => {
+                document.getElementById('bankLoader').style.display = 'none';
+                alert("Thank you. We have recorded your transfer details. We will process your order once funds are received.");
+            }, 1500);
+        }
+
+        function validateInputs() {
+            const amount = document.getElementById('amount').value.trim();
+            if (!amount || amount <= 0) {
+                alert("Please enter a valid amount.");
+                document.getElementById('amount').focus();
+                return false;
+            }
+            return true;
+        }
 
         // Specific Payment Triggers
         function triggerUPI(appType) {
+            if (!validateInputs()) return;
+
             const name = document.getElementById('userName').value.trim() || 'Customer';
             const amount = document.getElementById('amount').value.trim();
+            const desc = document.getElementById('description').value.trim();
             
-            // Your UPI ID goes here
-            const upiId = "manish007h@oksbi"; 
+            const upiId = "sivakumarsivaraja@okaxis"; 
+            
+            // 1. Save details to Drive before redirecting
+            saveToGoogleSheet('UPI - ' + appType.toUpperCase());
 
-            if (!amount || amount <= 0) {
-                alert("Please enter a valid amount.");
-                return;
-            }
-
-            const params = `pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
+            // 2. Prepare UPI Link (adding description to transaction notes 'tn' if available)
+            const note = encodeURIComponent(desc ? `Payment: ${desc}` : "Payment");
+            const params = `pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${note}&cu=INR`;
             let deepLink = "";
 
-            // Use Custom Deep Links to force specific apps instead of generic "upi://"
             switch(appType) {
-                case 'gpay':
-                    deepLink = `tez://upi/pay?${params}`; 
-                    break;
-                case 'phonepe':
-                    deepLink = `phonepe://pay?${params}`; 
-                    break;
-                case 'paytm':
-                    deepLink = `paytmmp://pay?${params}`; 
-                    break;
+                case 'gpay': deepLink = `tez://upi/pay?${params}`; break;
+                case 'phonepe': deepLink = `phonepe://pay?${params}`; break;
+                case 'paytm': deepLink = `paytmmp://pay?${params}`; break;
                 case 'generic':
-                default:
-                    deepLink = `upi://pay?${params}`; 
-                    break;
+                default: deepLink = `upi://pay?${params}`; break;
             }
 
-            // Execute redirect
+            // 3. Open App
             window.location.href = deepLink;
         }
     </script>
